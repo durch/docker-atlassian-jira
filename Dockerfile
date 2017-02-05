@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 
 # Configuration variables.
 ENV JIRA_HOME     /var/atlassian/jira
@@ -45,10 +45,10 @@ COPY "tomcat.key" "${JIRA_HOME}/tomcat.key"
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
 # here we only ever run one process anyway.
-USER daemon:daemon
+# USER daemon:daemon
 
 # Expose default HTTP connector port.
-EXPOSE 8080
+EXPOSE 8443
 
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
