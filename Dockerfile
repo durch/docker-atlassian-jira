@@ -10,7 +10,7 @@ ENV JIRA_VERSION  7.3.0
 RUN set -x \
     && apt-get update --quiet \
     && apt-get install --quiet --yes --no-install-recommends xmlstarlet \
-    && apt-get install --quiet --yes --no-install-recommends -t jessie-backports libtcnative-1 \
+    && apt-get install --quiet --yes --no-install-recommends -t jessie-backports libtcnative-1 curl unzip \
     && apt-get clean \
     && mkdir -p                "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_HOME}/caches/indexes" \
@@ -32,6 +32,15 @@ RUN set -x \
     && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
+
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" \
+	&& unzip awscli-bundle.zip \
+	&& ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+
+COPY "backup-to-s3.sh" "/etc/cron.daily/"
+COPY "keystore" "${JIRA_HOME}/.keystore"
+COPY "server.xml" "${JIRA_INSTALL}/conf/server.xml"
+COPY "tomcat.key" "${JIRA_HOME}/tomcat.key"
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
