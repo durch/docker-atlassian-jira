@@ -10,7 +10,7 @@ ENV JIRA_VERSION  7.3.0
 RUN set -x \
     && apt-get update --quiet \
     && apt-get install --quiet --yes --no-install-recommends xmlstarlet \
-    && apt-get install --quiet --yes --no-install-recommends -t jessie-backports libtcnative-1 curl unzip \
+    && apt-get install --quiet --yes --no-install-recommends -t jessie-backports libtcnative-1 curl unzip cron vim \
     && apt-get clean \
     && mkdir -p                "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_HOME}/caches/indexes" \
@@ -59,7 +59,7 @@ VOLUME ["/var/atlassian/jira", "/opt/atlassian/jira/logs"]
 WORKDIR /var/atlassian/jira
 
 # COPY "docker-entrypoint.sh" "/"
-# ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian JIRA as a foreground process by default.
 CMD ["/opt/atlassian/jira/bin/catalina.sh", "run"]
