@@ -62,4 +62,4 @@ COPY "entrypoint.sh" "/"
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Run Atlassian JIRA as a foreground process by default.
-CMD ["/opt/atlassian/jira/bin/catalina.sh", "run"]
+# CMD ["/opt/atlassian/jira/bin/catalina.sh", "run"]
