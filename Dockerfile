@@ -37,7 +37,8 @@ RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.
 	&& unzip awscli-bundle.zip \
 	&& ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
-COPY "backup-to-s3.sh" "/etc/cron.hourly/"
+COPY "backup-to-s3" "/etc/cron.hourly/"
+RUN chmod 711 /etc/cron.hourly/backup-to-s3
 COPY "keystore" "${JIRA_HOME}/.keystore"
 COPY "server.xml" "${JIRA_INSTALL}/conf/server.xml"
 COPY "tomcat.key" "${JIRA_HOME}/tomcat.key"
