@@ -40,9 +40,9 @@ RUN curl -k "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bund
 
 COPY "backup-to-s3" "/etc/cron.hourly/"
 RUN chmod 711 /etc/cron.hourly/backup-to-s3
-COPY "keystore" "${JIRA_HOME}/.keystore"
-COPY "server.xml" "${JIRA_INSTALL}/conf/server.xml"
-COPY "tomcat.key" "${JIRA_HOME}/tomcat.key"
+#COPY "keystore" "${JIRA_HOME}/.keystore"
+#COPY "server.xml" "${JIRA_INSTALL}/conf/server.xml"
+#COPY "tomcat.key" "${JIRA_HOME}/tomcat.key"
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
@@ -50,7 +50,7 @@ COPY "tomcat.key" "${JIRA_HOME}/tomcat.key"
 # USER daemon:daemon
 
 # Expose default HTTP connector port.
-EXPOSE 8443
+EXPOSE 8080
 
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
