@@ -3,9 +3,9 @@
 set -e
 
 DOW=$(date +%A | tr '[:upper:]' '[:lower:]')
-FN=jira_${DOW}
+FN=${APP_TAG}_${DOW}
 FNEXT=${FN}.tar.gz
-LATEST=jira_latest.tar.gz
+LATEST=${APP_TAG}_latest.tar.gz
 
 tar -czvf /tmp/${FNEXT} ${JIRA_HOME}
 cp /tmp/${FNEXT} /tmp/${LATEST}
